@@ -3,7 +3,7 @@ const Task = require("../models/Task");
 const createTask = async (req, res) => {
     try {
         await Task.create(req.body);
-        return res.status(200).send("created successfully");
+        return res.status(200).json({ message: "created successfully" });
     } catch (e) {
         return res.status(400).send(e.message);
     }

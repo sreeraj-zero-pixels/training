@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const client = require("./connection");
 const taskController = require("./controllers/taskController");
+const cors = require("cors");
 
 client
     .connect("mongodb+srv://sreerajr:KtbCc5vTC3ivVs1e@cluster0.wlcyjnz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
@@ -13,15 +14,16 @@ client
         console.log(err);
     });
 app.use(express.json());
+app.use(cors());
 
 app.get("/", (req, res) => {
-    res.send("GET request successful");
+    res.send({ message: "successful" });
 });
 
 app.post("/", (req, res) => {
     const data = req.body;
     console.log(data);
-    res.status(200).send(`POST request successful with data:${data.name}`);
+    res.status(200).json({ data });
 });
 
 app.post("/task", taskController.createTask);
